@@ -7,19 +7,21 @@ class Car:
     Class to define the Car object which will be the target of the model.
     """
 
-    def __init__(self, length=2.3, velocity=5, x_position=0, y_position=0, theta=0):
+    def __init__(self, length=2.3, velocity=5, x_position=0, y_position=0, steering_disturbance=0, theta=0):
         """
         Constructor for class Car.
         :param length: The length of the car as a float in meters
         :param velocity: The modulus of the velocity as as float in m s ^-1
         :param x_position: The x position of the car in relation to the origin as a float in meters
         :param y_position: The y position of the car in relation to the origin as a float in meters
+        :param steering_disturbance: The additive disturbance in the car to be added to steering angle
         :param theta: The argument of the velocity as a float in radians
         """
         self.__length = length
         self.__velocity = velocity
         self.__x_position = x_position
         self.__y_position = y_position
+        self.__steering_disturbance = steering_disturbance
         self.__theta = theta
 
     def move(self, steering_angle, dt):
@@ -53,7 +55,7 @@ class Car:
         theta = z[2]
         return [self.__velocity * cos(theta),
                 self.__velocity * sin(theta),
-                self.__velocity * tan(u) / self.__length]
+                self.__velocity * tan(u + self.__steering_disturbance) / self.__length]
 
     def get_x_position(self):
         """
